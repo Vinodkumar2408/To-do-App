@@ -7,8 +7,9 @@ function App() {
   const [listItems, setListItems] = useState([]);
   const [isUpdating, setIsUpdating] = useState('');
   const [updateItemText, setUpdateItemText] = useState('');
+  const[searchVal,setSearchVal]=useState('')
 
-
+  
   const addItem = async (e) => {
     e.preventDefault();
     try{
@@ -20,7 +21,7 @@ function App() {
     }
   }
 
-
+  
   useEffect(()=>{
     const getItemsList = async () => {
       try{
@@ -70,13 +71,24 @@ function App() {
   return (
     <div className="App">
       <h1>Todo List</h1>
+      <form className='inp'>
+      <input type="text" placeholder='search' onChange={e => {setSearchVal(e.target.value)} }  />
+      </form>
+        
+        
+      
       <form className="form" onSubmit={e => addItem(e)}>
         <input type="text" placeholder='Add Todo Item' onChange={e => {setItemText(e.target.value)} } value={itemText} />
-        <button type="submit">Add Task</button>
+        <button type="submit">Add</button>
       </form>
       <div className="todo-listItems">
         {
-          listItems.map(item => (
+          listItems.filter(val=>{
+            if (searchVal=="") return val
+            else if(val.item.toLowerCase().includes(searchVal.toLowerCase())){
+              return val
+            }
+          }).map(item => (
           <div className="todo-item">
             {
               isUpdating === item._id
