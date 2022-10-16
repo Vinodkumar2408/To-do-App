@@ -23,9 +23,9 @@ mongoose.connect(process.env.DB_CONNECT)
 
 app.use('/', TodoItemRoute);
 
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'build','index.html'));
-})
+// app.get('/',(req,res)=>{
+//     res.sendFile(path.join(__dirname,'build','index.html'));
+// })
 
 
 
