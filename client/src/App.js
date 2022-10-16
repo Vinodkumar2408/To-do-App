@@ -8,9 +8,16 @@ function App() {
   const [isUpdating, setIsUpdating] = useState('');
   const [updateItemText, setUpdateItemText] = useState('');
   const[searchVal,setSearchVal]=useState('')
+  const[Data,setData]=useState(null)
 
   
-  const addItem = async (e) => {
+  useEffect(()=>{fetch("/api")
+  .then((res)=>res.json())
+  .then((data)=>setData(data.message));
+},[]);
+  
+
+const addItem = async (e) => {
     e.preventDefault();
     try{
       const res = await axios.post('http://localhost:5500/api/item', {item: itemText})
@@ -70,6 +77,8 @@ function App() {
 
   return (
     <div className="App">
+
+    <p></p>
       <h1>Todo List</h1>
       <form className='inp'>
       <input type="text" placeholder='search' onChange={e => {setSearchVal(e.target.value)} }  />
